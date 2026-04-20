@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SoulPair</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="float-noti" class="noti-container">
+        <div class="noti-body">
+            <div class="noti-icon"></div>
+            <div class="noti-text">
+                <b id="noti-title">Miss You!</b>
+                <p id="noti-desc">Your partner is missing you...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="app">
+        <div id="page1" class="page active">
+            <header class="home-header">
+                <div class="pf-box"><img id="my-pf" src="https://via.placeholder.com/60" alt="Me"></div>
+                <div class="heart-center"></div>
+                <div class="pf-box">
+                    <img id="partner-pf" src="https://via.placeholder.com/60" alt="Partner">
+                    <span id="partner-status" class="status-text">Offline</span>
+                </div>
+            </header>
+            
+            <div class="timeline">
+                <span>We are together for</span>
+                <h2 id="timer">00y 00m 00d</h2>
+            </div>
+
+            <div class="mood-grid">
+                <div class="mood-card" onclick="openMoodPicker()">
+                    <p>My Mood</p>
+                    <div id="my-mood-emoji" class="emoji">😊</div>
+                </div>
+                <div class="mood-card">
+                    <p>Partner's Mood</p>
+                    <div id="partner-mood-emoji" class="emoji">😴</div>
+                    <small id="partner-mood-time">--</small>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button id="miss-you-btn" class="big-btn">MISS YOU</button>
+                <p id="feedback" class="feedback"></p>
+            </div>
+        </div>
+
+        <div id="page2" class="page">
+            <div class="temp-content">Chat Feature Coming Soon...</div>
+        </div>
+
+        <div id="page3" class="page">
+            <div class="settings-content">
+                <div class="profile-edit">
+                    <div class="large-pf">PF</div>
+                    <button class="edit-btn">Edit Profile</button>
+                </div>
+                <div class="pair-info">
+                    <p>My Pair Code</p>
+                    <div class="code-box">
+                        <span id="my-code">SP-XXXX</span>
+                        <button onclick="copyCode()">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="showPage(1)"></div>
+        <div class="nav-item" onclick="showPage(2)"></div>
+        <div class="nav-item" onclick="showPage(3)"></div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
