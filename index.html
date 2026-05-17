@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SoulPair  Real Connection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0B0B0F;
+      color: #EDEDF0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: fixed;
+    }
+
+    #app {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Role selection */
+    .role-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      background: radial-gradient(circle at 50% 20%, #14141C, #07070A);
+    }
+
+    .logo-text {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #FFFFFF, #C0B9FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.75rem;
+    }
+
+    .sub-role {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #A0A0B5;
+      letter-spacing: 0.3px;
+      margin-bottom: 3rem;
+    }
+
+    .role-cards {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      background: rgba(20, 20, 28, 0.7);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem 1.8rem;
+      border-radius: 48px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+      min-width: 160px;
+    }
+
+    .role-card:active {
+      transform: scale(0.97);
+      background: rgba(45, 45, 58, 0.9);
+    }
+
+    .role-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 100%;
+      object-fit: cover;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      border: 2px solid rgba(255,255,245,0.2);
+    }
+
+    .role-name {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    /* Main Dashboard */
+    .dashboard {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 18px 28px;
+      background: #0B0B0F;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+    .dashboard::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* status cards row */
+    .cards-row {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+    }
+
+    .status-card {
+      flex: 1;
+      background: rgba(18, 18, 24, 0.85);
+      backdrop-filter: blur(4px);
+      border-radius: 32px;
+      padding: 18px 12px 20px;
+      border: 0.5px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    .card-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 100px;
+      object-fit: cover;
+      border: 1.5px solid #A67CFF;
+    }
+
+    .card-name {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .lottie-container {
+      width: 100%;
+      height: 110px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 8px 0 8px;
+    }
+
+    .lottie-animation {
+      width: 100px;
+      height: 100px;
+    }
+
+    .status-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      background: rgba(255,255,245,0.06);
+      padding: 6px 12px;
+      border-radius: 40px;
+      display: inline-block;
+      width: auto;
+      margin: 8px auto 0;
+      backdrop-filter: blur(2px);
+    }
+
+    .timestamp {
+      font-size: 0.7rem;
+      color: #8A8A9E;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* typing center */
+    .quote-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 20px;
+      min-height: 100px;
+    }
+
+    .typing-text {
+      font-size: 1.35rem;
+      font-weight: 500;
+      text-align: center;
+      letter-spacing: -0.2px;
+      background: linear-gradient(120deg, #E0DDFF, #B9B2FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding: 0 12px;
+      line-height: 1.4;
+    }
+
+    /* bottom actions */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+
+    .update-status-btn {
+      width: 100%;
+      background: rgba(30, 30, 40, 0.9);
+      border: 1px solid rgba(166, 124, 255, 0.4);
+      padding: 16px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .update-status-btn:active {
+      background: #292934;
+      transform: scale(0.98);
+    }
+
+    /* Floating flutter button */
+    .flutter-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .flutter-btn {
+      background: radial-gradient(circle at 30% 20%, #FF4B7C, #D42C5A);
+      width: 70px;
+      height: 70px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(255, 75, 124, 0.6), 0 8px 20px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      position: relative;
+    }
+
+    .progress-ring {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 80px;
+      height: 80px;
+      pointer-events: none;
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring circle {
+      fill: none;
+      stroke: #FFE6F0;
+      stroke-width: 3;
+      stroke-dasharray: 226;
+      stroke-dashoffset: 226;
+      transition: stroke-dashoffset 0.02s linear;
+    }
+
+    .flutter-btn:active {
+      transform: scale(0.94);
+    }
+
+    .heart-icon {
+      font-size: 36px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    }
+
+    /* Bottom sheet */
+    .bottom-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(12, 12, 18, 0.96);
+      backdrop-filter: blur(24px);
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      z-index: 1000;
+      padding: 24px 20px 34px;
+      box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sheet-open {
+      transform: translateY(0%);
+    }
+
+    .drag-handle {
+      width: 45px;
+      height: 5px;
+      background: #3E3E4C;
+      border-radius: 20px;
+      margin: 0 auto 24px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      text-align: center;
+    }
+
+    .status-option {
+      background: rgba(30, 30, 40, 0.7);
+      padding: 14px 6px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: 0.1s;
+      cursor: pointer;
+    }
+
+    .status-option:active {
+      background: #A67CFF40;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+
+    .overlay-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* no scroll */
+    .no-scroll {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+  // ---------- SUPABASE ----------
+  const SUPABASE_URL = "https://ehjfkrabnbgbfiaqlwfd.supabase.co";
+  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVoamZrcmFibmJnYmZpYXFsd2ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NzcxMTksImV4cCI6MjA5MTE1MzExOX0.4qC2R9UyauOLhqfuMos8JX2nR02KDYJXumOEoazDa1k";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  
+  // ---------- GLOBALS ----------
+  let currentRole = null;       // 'boy' or 'girl'
+  let partnerRole = null;
+  let myStatus = null;
+  let partnerStatus = null;
+  let myTimestamp = null;
+  let partnerTimestamp = null;
+  
+  let myLottieInstance = null;
+  let partnerLottieInstance = null;
+  
+  let typingInterval = null;
+  let currentQuoteIndex = 0;
+  let isDeleting = false;
+  let typingTimeout = null;
+  
+  const quotes = [
+    "Every heartbeat belongs to you",
+    "Silence speaks our language",
+    "Side by side, soul aligned",
+    "Distance fades when love stays",
+    "You're my home"
+  ];
+  
+  const statusMapping = {
+    "Free": "free.json",
+    "Teaching": "teaching.json",
+    "Busy": "busy.json",
+    "Sad": "sad.json",
+    "Tired": "tired.json",
+    "Studying": "studying.json",
+    "Sleeping": "sleeping.json",
+    "Working": "working.json"
+  };
+  
+  let sheetOpen = false;
+  let longPressTimer = null;
+  let progressInterval = null;
+  let pressStartTime = 0;
+  let progressRingCircle = null;
+  
+  // Helper: format relative time
+  function formatRelativeTime(timestamp) {
+    if (!timestamp) return "just now";
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffSec = Math.floor((now - date) / 1000);
+    if (diffSec < 60) return "just now";
+    if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+    if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+    return `${Math.floor(diffSec / 86400)}d ago`;
+  }
+  
+  // Update timer UI each minute
+  function startTimersRefresh() {
+    setInterval(() => {
+      if (currentRole && document.getElementById('myTimestamp')) {
+        if (myTimestamp) document.getElementById('myTimestamp').innerText = formatRelativeTime(myTimestamp);
+        if (partnerTimestamp) document.getElementById('partnerTimestamp').innerText = formatRelativeTime(partnerTimestamp);
+      }
+    }, 60000);
+  }
+  
+  // LOTTIE HANDLERS
+  function destroyLottie(instance, containerId) {
+    if (instance) {
+      instance.destroy();
+    }
+    const container = document.getElementById(containerId);
+    if (container) container.innerHTML = "";
+    return null;
+  }
+  
+  function loadLottieAnimation(containerId, jsonFile, instanceRef, fallbackLabel) {
+    let newInstance = null;
+    if (instanceRef && typeof instanceRef.destroy === 'function') instanceRef.destroy();
+    const container = document.getElementById(containerId);
+    if (container) container.innerHTML = "";
+    try {
+      newInstance = lottie.loadAnimation({
+        container: document.getElementById(containerId),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: jsonFile
+      });
+    } catch(e) {
+      console.warn(e);
+    }
+    return newInstance;
+  }
+  
+  async function updateUIFromState() {
+    if (!currentRole) return;
+    // my card
+    document.getElementById('myName').innerText = currentRole === 'boy' ? 'TMW' : 'CHO';
+    document.getElementById('myAvatar').src = currentRole === 'boy' ? 'boy.jpg' : 'girl.jpg';
+    const myStatusText = myStatus || 'Free';
+    document.getElementById('myStatusLabel').innerText = myStatusText;
+    document.getElementById('myTimestamp').innerText = formatRelativeTime(myTimestamp);
+    const myJson = statusMapping[myStatusText] || "free.json";
+    myLottieInstance = destroyLottie(myLottieInstance, 'myLottie');
+    if (document.getElementById('myLottie')) {
+      myLottieInstance = loadLottieAnimation('myLottie', myJson, myLottieInstance, myStatusText);
+    }
+    
+    // partner card
+    document.getElementById('partnerName').innerText = partnerRole === 'boy' ? 'TMW' : 'CHO';
+    document.getElementById('partnerAvatar').src = partnerRole === 'boy' ? 'boy.jpg' : 'girl.jpg';
+    const partnerStatusText = partnerStatus || 'Free';
+    document.getElementById('partnerStatusLabel').innerText = partnerStatusText;
+    document.getElementById('partnerTimestamp').innerText = formatRelativeTime(partnerTimestamp);
+    partnerLottieInstance = destroyLottie(partnerLottieInstance, 'partnerLottie');
+    if (document.getElementById('partnerLottie')) {
+      partnerLottieInstance = loadLottieAnimation('partnerLottie', statusMapping[partnerStatusText] || "free.json", partnerLottieInstance, partnerStatusText);
+    }
+  }
+  
+  // REALTIME subscription
+  let statusSubscription = null;
+  function subscribeRealtime() {
+    if (statusSubscription) statusSubscription.unsubscribe();
+    statusSubscription = supabase
+      .channel('couple_state_changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'couple_state' }, (payload) => {
+        const newRecord = payload.new;
+        if (newRecord && newRecord.role) {
+          const roleRec = newRecord.role;
+          const statusVal = newRecord.current_status;
+          const updated = newRecord.updated_at;
+          if (roleRec === currentRole) {
+            myStatus = statusVal;
+            myTimestamp = updated;
+            updateUIFromState();
+          } else if (roleRec === partnerRole) {
+            partnerStatus = statusVal;
+            partnerTimestamp = updated;
+            updateUIFromState();
+          }
+        }
+      })
+      .subscribe();
+  }
+  
+  // fetch initial state
+  async function fetchInitialState() {
+    const { data, error } = await supabase.from('couple_state').select('*');
+    if (!error && data) {
+      for (let item of data) {
+        if (item.role === currentRole) {
+          myStatus = item.current_status;
+          myTimestamp = item.updated_at;
+        } else if (item.role === partnerRole) {
+          partnerStatus = item.current_status;
+          partnerTimestamp = item.updated_at;
+        }
+      }
+      if (!myStatus) myStatus = "Free";
+      if (!partnerStatus) partnerStatus = "Free";
+      updateUIFromState();
+    } else {
+      // ensure default
+      myStatus = "Free";
+      partnerStatus = "Free";
+      updateUIFromState();
+      await upsertStatus(currentRole, "Free");
+    }
+  }
+  
+  async function upsertStatus(role, statusText) {
+    const now = new Date().toISOString();
+    const { error } = await supabase.from('couple_state').upsert({
+      role: role,
+      current_status: statusText,
+      updated_at: now
+    }, { onConflict: 'role' });
+    if (!error) {
+      if (role === currentRole) {
+        myStatus = statusText;
+        myTimestamp = now;
+      } else {
+        partnerStatus = statusText;
+        partnerTimestamp = now;
+      }
+      updateUIFromState();
+    }
+  }
+  
+  // Bottom sheet logic
+  function showBottomSheet() {
+    if (sheetOpen) return;
+    sheetOpen = true;
+    document.getElementById('bottomSheet').classList.add('sheet-open');
+    document.getElementById('overlay').classList.add('overlay-active');
+    document.body.classList.add('no-scroll');
+  }
+  function hideBottomSheet() {
+    sheetOpen = false;
+    document.getElementById('bottomSheet').classList.remove('sheet-open');
+    document.getElementById('overlay').classList.remove('overlay-active');
+    document.body.classList.remove('no-scroll');
+  }
+  
+  // Typing animation
+  function typeWriterEffect() {
+    const element = document.getElementById('typingText');
+    if (!element) return;
+    let fullText = quotes[currentQuoteIndex];
+    let displayedText = isDeleting ? fullText : "";
+    let step = () => {
+      if (!isDeleting) {
+        if (displayedText.length < fullText.length) {
+          displayedText = fullText.slice(0, displayedText.length + 1);
+          element.innerText = displayedText;
+          setTimeout(step, 100);
+        } else {
+          setTimeout(() => { isDeleting = true; step(); }, 2200);
+        }
+      } else {
+        if (displayedText.length > 0) {
+          displayedText = displayedText.slice(0, -1);
+          element.innerText = displayedText;
+          setTimeout(step, 50);
+        } else {
+          isDeleting = false;
+          currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+          step();
+        }
+      }
+    };
+    step();
+  }
+  
+  // Flutter longpress
+  function startLongPress() {
+    if (longPressTimer) clearTimeout(longPressTimer);
+    pressStartTime = Date.now();
+    const ring = document.getElementById('progressCircle');
+    if (ring) {
+      const circumference = 226;
+      ring.style.strokeDasharray = circumference;
+      ring.style.strokeDashoffset = circumference;
+    }
+    longPressTimer = setTimeout(() => {
+      // send flutter (heart effect)
+      if (progressInterval) clearInterval(progressInterval);
+      if (ring) ring.style.strokeDashoffset = 226;
+      // send realtime "flutter" not stored but we just do visual premium, but to keep partner  we trigger a special effect? according to brief: Long press 2 seconds to send flutter - we trigger no status but just animation feedback, but we can show a temporary toast-like without breaking? Better to just dispatch pulse.
+      const flutterEffect = document.createElement('div');
+      flutterEffect.innerText = '';
+      flutterEffect.style.position = 'fixed';
+      flutterEffect.style.left = '50%';
+      flutterEffect.style.top = '50%';
+      flutterEffect.style.fontSize = '3rem';
+      flutterEffect.style.zIndex = '2000';
+      flutterEffect.style.transform = 'translate(-50%, -50%)';
+      flutterEffect.style.pointerEvents = 'none';
+      flutterEffect.style.opacity = '0.8';
+      flutterEffect.style.transition = 'all 0.6s ease';
+      document.body.appendChild(flutterEffect);
+      setTimeout(() => { flutterEffect.style.opacity = '0'; flutterEffect.style.transform = 'translate(-50%, -80%)'; setTimeout(() => flutterEffect.remove(), 700); }, 20);
+      longPressTimer = null;
+      if (progressInterval) clearInterval(progressInterval);
+    }, 2000);
+    
+    progressInterval = setInterval(() => {
+      const elapsed = Date.now() - pressStartTime;
+      let percent = Math.min(1, elapsed / 2000);
+      const circumference = 226;
+      const offset = circumference - (percent * circumference);
+      if (ring) ring.style.strokeDashoffset = offset;
+      if (elapsed >= 2000) clearInterval(progressInterval);
+    }, 16);
+  }
+  
+  function cancelLongPress() {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      progressInterval = null;
+    }
+    const ring = document.getElementById('progressCircle');
+    if (ring) ring.style.strokeDashoffset = 226;
+  }
+  
+  // Render Role Selection
+  function renderRoleSelection() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+      <div class="role-container">
+        <div class="logo-text">SoulPair</div>
+        <div class="sub-role">Who are you?</div>
+        <div class="role-cards">
+          <div class="role-card" data-role="boy">
+            <img class="role-img" src="boy.jpg" alt="TMW">
+            <div class="role-name">TMW</div>
+          </div>
+          <div class="role-card" data-role="girl">
+            <img class="role-img" src="girl.jpg" alt="CHO">
+            <div class="role-name">CHO</div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.querySelectorAll('.role-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const role = card.getAttribute('data-role');
+        localStorage.setItem('soulpair_role', role);
+        currentRole = role;
+        partnerRole = role === 'boy' ? 'girl' : 'boy';
+        initDashboard();
+      });
+    });
+  }
+  
+  // Dashboard Render
+  function initDashboard() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+      <div class="dashboard">
+        <div class="cards-row">
+          <div class="status-card">
+            <div class="card-profile">
+              <img id="myAvatar" class="card-avatar" src="" alt="my">
+              <span id="myName" class="card-name"></span>
+            </div>
+            <div id="myLottie" class="lottie-container"><div class="lottie-animation"></div></div>
+            <div style="text-align:center"><span id="myStatusLabel" class="status-label">Free</span></div>
+            <div id="myTimestamp" class="timestamp">just now</div>
+          </div>
+          <div class="status-card">
+            <div class="card-profile">
+              <img id="partnerAvatar" class="card-avatar" src="" alt="partner">
+              <span id="partnerName" class="card-name"></span>
+            </div>
+            <div id="partnerLottie" class="lottie-container"><div class="lottie-animation"></div></div>
+            <div style="text-align:center"><span id="partnerStatusLabel" class="status-label">Free</span></div>
+            <div id="partnerTimestamp" class="timestamp">just now</div>
+          </div>
+        </div>
+        <div class="quote-section">
+          <div id="typingText" class="typing-text"></div>
+        </div>
+        <div class="actions">
+          <button class="update-status-btn" id="updateStatusBtn">Update status</button>
+          <div class="flutter-wrapper">
+            <div class="flutter-btn" id="flutterBtn">
+              <div class="heart-icon"></div>
+              <svg class="progress-ring" width="80" height="80">
+                <circle cx="40" cy="40" r="36" stroke="white" stroke-width="2.5" fill="transparent" stroke-dasharray="226" stroke-dashoffset="226" id="progressCircle"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="overlay" id="overlay"></div>
+      <div class="bottom-sheet" id="bottomSheet">
+        <div class="drag-handle"></div>
+        <div class="status-grid" id="statusOptionsGrid"></div>
+      </div>
+    `;
+    
+    const statuses = Object.keys(statusMapping);
+    const grid = document.getElementById('statusOptionsGrid');
+    statuses.forEach(stat => {
+      const div = document.createElement('div');
+      div.className = 'status-option';
+      div.innerText = stat;
+      div.addEventListener('click', async () => {
+        await upsertStatus(currentRole, stat);
+        hideBottomSheet();
+      });
+      grid.appendChild(div);
+    });
+    
+    document.getElementById('updateStatusBtn').addEventListener('click', showBottomSheet);
+    document.getElementById('overlay').addEventListener('click', hideBottomSheet);
+    const sheetDiv = document.getElementById('bottomSheet');
+    let startY = 0;
+    sheetDiv.addEventListener('touchstart', (e) => startY = e.touches[0].clientY);
+    sheetDiv.addEventListener('touchmove', (e) => {
+      const delta = e.touches[0].clientY - startY;
+      if (delta > 50) hideBottomSheet();
+    });
+    
+    const flutterBtn = document.getElementById('flutterBtn');
+    flutterBtn.addEventListener('mousedown', startLongPress);
+    flutterBtn.addEventListener('mouseup', cancelLongPress);
+    flutterBtn.addEventListener('mouseleave', cancelLongPress);
+    flutterBtn.addEventListener('touchstart', startLongPress);
+    flutterBtn.addEventListener('touchend', cancelLongPress);
+    flutterBtn.addEventListener('touchcancel', cancelLongPress);
+    
+    fetchInitialState().then(() => subscribeRealtime());
+    startTimersRefresh();
+    typeWriterEffect();
+  }
+  
+  // LAUNCH logic
+  (function bootstrap() {
+    const savedRole = localStorage.getItem('soulpair_role');
+    if (savedRole && (savedRole === 'boy' || savedRole === 'girl')) {
+      currentRole = savedRole;
+      partnerRole = currentRole === 'boy' ? 'girl' : 'boy';
+      initDashboard();
+    } else {
+      renderRoleSelection();
+    }
+  })();
+</script>
+</body>
+</html>
