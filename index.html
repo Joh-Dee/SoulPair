@@ -1,0 +1,140 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>SoulPair</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+  <div class="app">
+
+    <!-- ROLE SCREEN -->
+    <section id="roleScreen" class="role-screen">
+      <div class="role-container">
+        <h1 class="logo">SoulPair</h1>
+        <p class="subtitle">Who are you?</p>
+
+        <div class="role-cards">
+          <button class="role-card" data-role="boy">
+            <div class="role-image-wrap">
+              <img src="boy.jpg" alt="TMW" />
+            </div>
+            <span>TMW</span>
+          </button>
+
+          <button class="role-card" data-role="girl">
+            <div class="role-image-wrap">
+              <img src="girl.jpg" alt="CHO" />
+            </div>
+            <span>CHO</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN -->
+    <section id="mainScreen" class="main-screen hidden">
+      <div class="top-section">
+
+        <!-- MY CARD -->
+        <div class="status-card">
+          <div class="card-top">
+            <img id="myProfile" class="profile-img" src="" alt="" />
+            <div class="card-info">
+              <div class="card-title">My Status</div>
+              <div id="myTime" class="card-time">just now</div>
+            </div>
+          </div>
+
+          <div id="myLottie" class="lottie-box"></div>
+
+          <div id="myStatus" class="status-label">Free</div>
+        </div>
+
+        <!-- PARTNER CARD -->
+        <div class="status-card">
+          <div class="card-top">
+            <img id="partnerProfile" class="profile-img" src="" alt="" />
+            <div class="card-info">
+              <div class="card-title">Partner Status</div>
+              <div id="partnerTime" class="card-time">just now</div>
+            </div>
+          </div>
+
+          <div id="partnerLottie" class="lottie-box"></div>
+
+          <div id="partnerStatus" class="status-label">Free</div>
+        </div>
+      </div>
+
+      <!-- QUOTE -->
+      <div class="quote-section">
+        <div id="quoteText" class="quote-text"></div>
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="bottom-section">
+        <button id="statusBtn" class="status-btn">
+          Update Status
+        </button>
+
+        <div class="flutter-container">
+          <div class="flutter-glow"></div>
+
+          <svg class="progress-ring" width="92" height="92">
+            <circle class="ring-bg" cx="46" cy="46" r="40"></circle>
+            <circle id="progressCircle" class="ring-progress" cx="46" cy="46" r="40"></circle>
+          </svg>
+
+          <button id="flutterBtn" class="flutter-btn">
+            <span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FLUTTER -->
+      <div id="flutterOverlay" class="flutter-overlay"></div>
+    </section>
+
+    <!-- SHEET -->
+    <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
+
+    <div id="bottomSheet" class="bottom-sheet">
+      <div id="sheetHandle" class="sheet-handle-wrap">
+        <div class="sheet-handle"></div>
+      </div>
+
+      <div class="sheet-content">
+        <button class="sheet-item" data-status="Free">Free</button>
+        <button class="sheet-item" data-status="Teaching">Teaching</button>
+        <button class="sheet-item" data-status="Busy">Busy</button>
+        <button class="sheet-item" data-status="Sad">Sad</button>
+        <button class="sheet-item" data-status="Tired">Tired</button>
+        <button class="sheet-item" data-status="Studying">Studying</button>
+        <button class="sheet-item" data-status="Sleeping">Sleeping</button>
+        <button class="sheet-item" data-status="Working">Working</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
