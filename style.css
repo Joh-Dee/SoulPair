@@ -1,0 +1,358 @@
+:root{
+  --bg:#08080c;
+  --card:#13131a;
+  --border:rgba(255,255,255,.07);
+  --text:#f5f5f5;
+  --muted:#90909c;
+  --pink:#ff5f8d;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+body{
+  position:relative;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.role-page{
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+}
+
+.role-wrap{
+  width:100%;
+  max-width:380px;
+  text-align:center;
+}
+
+.logo-dot{
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  margin:0 auto 18px;
+  background:var(--pink);
+  box-shadow:0 0 40px var(--pink);
+}
+
+.role-wrap h1{
+  font-size:40px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.role-wrap p{
+  color:var(--muted);
+  margin-bottom:44px;
+}
+
+.role-grid{
+  display:flex;
+  justify-content:center;
+  gap:34px;
+}
+
+.role-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.role-card img{
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid rgba(255,255,255,.07);
+  transition:.2s;
+}
+
+.role-card:active img{
+  transform:scale(.95);
+}
+
+.role-card span{
+  margin-top:14px;
+}
+
+.app{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+.cards{
+  padding:max(env(safe-area-inset-top),18px) 16px 0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.status-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid var(--border);
+  border-radius:30px;
+  padding:18px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+  backdrop-filter:blur(16px);
+}
+
+.avatar{
+  width:74px;
+  height:74px;
+  border-radius:24px;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+.lottie{
+  width:120px;
+  height:120px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.lottie svg{
+  width:100% !important;
+  height:100% !important;
+}
+
+.status-label{
+  margin-top:4px;
+  font-size:15px;
+  font-weight:500;
+}
+
+.status-time{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.center-text-wrap{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:0 28px 180px;
+}
+
+.typing-text{
+  font-size:22px;
+  line-height:1.8;
+}
+
+.bottom-ui{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:170px;
+  display:flex;
+  justify-content:center;
+  z-index:50;
+}
+
+.status-btn{
+  width:82%;
+  max-width:360px;
+  height:58px;
+  border:none;
+  border-radius:22px;
+  color:white;
+  font-size:15px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.06);
+  backdrop-filter:blur(14px);
+}
+
+.flutter-wrap{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  z-index:60;
+}
+
+.flutter-label{
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.flutter-btn{
+  width:120px;
+  height:120px;
+  border:none;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,95,141,.16),rgba(255,95,141,.03));
+  position:relative;
+  box-shadow:0 0 50px rgba(255,95,141,.18);
+}
+
+.progress-ring{
+  transform:rotate(-90deg);
+}
+
+.ring-bg{
+  fill:none;
+  stroke:rgba(255,255,255,.08);
+  stroke-width:4;
+}
+
+.ring-fill{
+  fill:none;
+  stroke:var(--pink);
+  stroke-width:4;
+  stroke-linecap:round;
+  stroke-dasharray:326.7;
+  stroke-dashoffset:326.7;
+}
+
+.heart-core{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:52px;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(8px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:100;
+}
+
+.overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#121219;
+  border-radius:30px 30px 0 0;
+  padding:12px 18px 40px;
+  transform:translateY(100%);
+  transition:transform .35s ease;
+  z-index:200;
+}
+
+.sheet.active{
+  transform:translateY(0);
+}
+
+.sheet-handle{
+  width:48px;
+  height:5px;
+  border-radius:999px;
+  background:rgba(255,255,255,.13);
+  margin:0 auto 18px;
+}
+
+.sheet-title{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.status-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.status-item{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:220px;
+  transform:translateX(-50%) translateY(30px);
+  background:#181820;
+  border-radius:999px;
+  padding:12px 18px;
+  font-size:13px;
+  opacity:0;
+  transition:.3s;
+  z-index:300;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.buzz-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:999;
+}
+
+.buzz-overlay.active{
+  opacity:1;
+}
+
+.buzz-heart{
+  font-size:110px;
+  animation:beat .7s infinite;
+}
+
+@keyframes beat{
+  50%{
+    transform:scale(1.12);
+  }
+}
