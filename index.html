@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SoulPair</title>
+
+  <!-- Plus Jakarta Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+
+<!-- ========== ROLE PAGE ========== -->
+<section id="rolePage" class="role-page">
+  <div class="role-bg-orb"></div>
+  <div class="role-bg-orb-secondary"></div>
+
+  <div class="role-wrap">
+    <div class="logo-pulse">
+      <div class="logo-heart"></div>
+    </div>
+
+    <h1 class="role-title">SoulPair</h1>
+    <p class="role-subtitle">stay connected,<br>even when apart</p>
+
+    <div class="role-grid">
+      <div class="role-card" data-role="boy">
+        <div class="role-img-wrap">
+          <img src="boy.jpg" alt="boy" />
+          <div class="role-shimmer"></div>
+        </div>
+        <span class="role-name">TMW</span>
+        <span class="role-hint">tap to choose</span>
+      </div>
+
+      <div class="role-card" data-role="girl">
+        <div class="role-img-wrap">
+          <img src="girl.jpg" alt="girl" />
+          <div class="role-shimmer"></div>
+        </div>
+        <span class="role-name">CHO</span>
+        <span class="role-hint">tap to choose</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAIN APP ========== -->
+<main id="app" class="app hidden">
+
+  <section class="cards">
+
+    <div class="status-card mine">
+      <img id="myAvatar" class="avatar" src="boy.jpg" alt="me" />
+      <div id="myLottie" class="lottie"></div>
+      <div id="myStatus" class="status-label">Free</div>
+      <div id="myTime" class="status-time">just now</div>
+    </div>
+
+    <div class="status-card partner">
+      <img id="partnerAvatar" class="avatar" src="girl.jpg" alt="partner" />
+      <div id="partnerLottie" class="lottie"></div>
+      <div id="partnerStatus" class="status-label">Waiting...</div>
+      <div id="partnerTime" class="status-time">waiting...</div>
+    </div>
+
+  </section>
+
+  <section class="center-text-wrap">
+    <div id="typingText" class="typing-text"></div>
+  </section>
+
+  <section class="bottom-ui">
+    <button id="openSheetBtn" class="status-btn">
+      <span></span> Update Status
+    </button>
+  </section>
+
+  <div class="flutter-wrap">
+    <div class="flutter-label">hold to send a flutter</div>
+
+    <button id="flutterBtn" class="flutter-btn">
+      <svg class="progress-ring" width="130" height="130">
+        <circle class="ring-bg" cx="65" cy="65" r="56"></circle>
+        <circle id="ringFill" class="ring-fill" cx="65" cy="65" r="56"></circle>
+      </svg>
+
+      <div class="heart-core"></div>
+      <div class="flutter-glow"></div>
+    </button>
+  </div>
+
+</main>
+
+<!-- ========== OVERLAY ========== -->
+<div id="overlay" class="overlay"></div>
+
+<!-- ========== BOTTOM SHEET ========== -->
+<section id="sheet" class="sheet">
+  <div id="sheetHandle" class="sheet-handle"></div>
+  <div class="sheet-title">Choose Status</div>
+  <div id="statusList" class="status-list"></div>
+</section>
+
+<!-- ========== TOAST ========== -->
+<div id="toast" class="toast"></div>
+
+<!-- ========== BUZZ OVERLAY ========== -->
+<div id="buzzOverlay" class="buzz-overlay">
+  <div class="buzz-heart"></div>
+  <div class="buzz-ripple"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
