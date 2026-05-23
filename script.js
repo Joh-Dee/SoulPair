@@ -247,17 +247,36 @@ function subscribeRealtime() {
   db.channel('couple-sync')
     .on(
       'postgres_changes',
-      { event: '*', schema: 'public', table: 'couple_state' },
+      { 
+        event: 'UPDATE', 
+        schema: 'public', 
+        table: 'couple_state',
+        filter: `role=eq.${PARTNER_ROLE}`
+      },
       payload => {
-        const row = payload.new;
-        if (!row) return;
-
-        if (row.role === PARTNER_ROLE) {
-          renderPartner(row.current_status, row.updated_at);
-        }
+        console.log(' UPDATE received:', payload.new);
+        renderPartner(payload.new.current_status, payload.new.updated_at);
       }
     )
-    .subscribe();
+    .on(
+      'postgres_changes',
+      { 
+        event: 'INSERT', 
+        schema: 'public', 
+        table: 'couple_state',
+        filter: `role=eq.${PARTNER_ROLE}`
+      },
+      payload => {
+        console.log(' INSERT received:', payload.new);
+        renderPartner(payload.new.current_status, payload.new.updated_at);
+      }
+    )
+    .subscribe((status) => {
+      console.log('Channel status:', status);
+      if (status === 'SUBSCRIBED') {
+        console.log(' Realtime connected!');
+      }
+    });
 }
 
 // ============ TIME ============
