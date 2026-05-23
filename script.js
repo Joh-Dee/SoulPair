@@ -244,7 +244,9 @@ function loadLottie(type, file) {
 // ============ REALTIME ============
 
 function subscribeRealtime() {
-  db.channel('couple-sync')
+  const channel = db.channel('couple-sync');
+
+  channel
     .on(
       'postgres_changes',
       { 
@@ -254,7 +256,7 @@ function subscribeRealtime() {
         filter: `role=eq.${PARTNER_ROLE}`
       },
       payload => {
-        console.log(' UPDATE received:', payload.new);
+        console.log('UPDATE:', payload.new);
         renderPartner(payload.new.current_status, payload.new.updated_at);
       }
     )
@@ -267,16 +269,14 @@ function subscribeRealtime() {
         filter: `role=eq.${PARTNER_ROLE}`
       },
       payload => {
-        console.log(' INSERT received:', payload.new);
+        console.log('INSERT:', payload.new);
         renderPartner(payload.new.current_status, payload.new.updated_at);
       }
-    )
-    .subscribe((status) => {
-      console.log('Channel status:', status);
-      if (status === 'SUBSCRIBED') {
-        console.log(' Realtime connected!');
-      }
-    });
+    );
+
+  channel.subscribe((status) => {
+    console.log('Channel status:', status);
+  });
 }
 
 // ============ TIME ============
