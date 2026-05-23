@@ -19,7 +19,7 @@ const STATUS = [
   { id: 'free', label: 'Free', file: 'free.json' },
   { id: 'teaching', label: 'Teaching', file: 'teaching.json' },
   { id: 'busy', label: 'Busy', file: 'busy.json' },
-  { id: 'sad', label: 'Sad', file: 'sad.json' },
+  { id: 'eating', label: 'eating', file: 'eating.json' },
   { id: 'tired', label: 'Tired', file: 'tired.json' },
   { id: 'studying', label: 'Studying', file: 'studying.json' },
   { id: 'sleeping', label: 'Sleeping', file: 'sleeping.json' },
