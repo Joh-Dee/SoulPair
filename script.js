@@ -326,17 +326,27 @@ function startTyping() {
 
 function setupSheet() {
   $('openSheetBtn').addEventListener('click', openSheet);
+
   $('openSheetBtn').addEventListener('touchend', (e) => {
     e.preventDefault();
     openSheet();
   });
 
   $('overlay').addEventListener('click', closeSheet);
+
   $('overlay').addEventListener('touchend', (e) => {
     e.preventDefault();
     closeSheet();
   });
 
+  // ===== Browser / Android Back Button =====
+  window.addEventListener('popstate', () => {
+    if ($('sheet').classList.contains('active')) {
+      closeSheetSilent();
+    }
+  });
+
+  // ===== Swipe Down =====
   let startY = 0;
   let endY = 0;
 
@@ -352,15 +362,45 @@ function setupSheet() {
     if (endY - startY > 80) {
       closeSheet();
     }
+
+    startY = 0;
+    endY = 0;
   });
 }
 
+// ===== OPEN =====
 function openSheet() {
+
+  // Prevent duplicate history states
+  if ($('sheet').classList.contains('active')) return;
+
   $('sheet').classList.add('active');
   $('overlay').classList.add('active');
+
+  // Push history state safely
+  history.pushState(
+    { sheetOpen: true },
+    '',
+    window.location.href
+  );
 }
 
+// ===== CLOSE =====
 function closeSheet() {
+
+  if (!$('sheet').classList.contains('active')) return;
+
+  $('sheet').classList.remove('active');
+  $('overlay').classList.remove('active');
+
+  // Only go back if this state belongs to sheet
+  if (history.state && history.state.sheetOpen) {
+    history.back();
+  }
+}
+
+// ===== CLOSE WITHOUT HISTORY =====
+function closeSheetSilent() {
   $('sheet').classList.remove('active');
   $('overlay').classList.remove('active');
 }
