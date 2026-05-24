@@ -115,6 +115,32 @@ async function startApp() {
   setupFlutter();
   startTyping();
   setInterval(updateTimes, 1000);
+
+
+  // FCM Token ကို Supabase မှာ သိမ်း
+async function saveFCMToken(token) {
+  if (!MY_ROLE || !token || token === 'undefined') return;
+  
+  const { error } = await db.from('fcm_tokens').upsert({
+    role: MY_ROLE,
+    token: token,
+    updated_at: new Date().toISOString()
+  }, {
+    onConflict: 'role'
+  });
+  
+  if (!error) {
+    console.log(' FCM Token saved');
+  }
+}
+
+// WebView ကနေ token ရောက်လာရင် သိမ်း
+let fcmCheckInterval = setInterval(() => {
+  if (window.FCM_TOKEN && window.FCM_TOKEN !== 'undefined' && window.FCM_TOKEN !== '') {
+    saveFCMToken(window.FCM_TOKEN);
+    clearInterval(fcmCheckInterval);
+  }
+}, 2000);
 }
 
 // ============ BUILD STATUS LIST ============
