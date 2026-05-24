@@ -471,7 +471,16 @@ async function finishPress() {
   $('ringFill').style.strokeDashoffset = RING;
 
   await db.from('buzz').insert({ sender_role: MY_ROLE });
-  showToast('Flutter sent ');
+  
+  showToast('Miss you sent ');
+  
+  // ကိုယ့်ဘက်မှာလည်း Vibration
+  if (navigator.vibrate) {
+    navigator.vibrate([120, 60, 120]);
+  }
+  
+  // ကိုယ့်ဘက်မှာလည်း Buzz Effect
+  showBuzz();
 }
 
 // ============ BUZZ ============
