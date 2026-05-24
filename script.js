@@ -289,39 +289,54 @@ function timeAgo(date) {
 
 // ============ TYPING ============
 
+// ============ TYPING ============
+
 let quoteIndex = 0;
 let charIndex = 0;
 let deleting = false;
+let typingTimer = null;
+let isTypingPaused = false;
 
 function startTyping() {
   const el = $('typingText');
 
   function type() {
+    if (isTypingPaused) return;
+
     const quote = QUOTES[quoteIndex];
 
     if (!deleting) {
       el.textContent = quote.slice(0, charIndex++);
       if (charIndex > quote.length) {
         deleting = true;
-        setTimeout(type, 2000);
+        typingTimer = setTimeout(type, 2000);
         return;
       }
-      setTimeout(type, 160);
+      typingTimer = setTimeout(type, 160);
     } else {
       el.textContent = quote.slice(0, charIndex--);
       if (charIndex < 0) {
         deleting = false;
         quoteIndex = (quoteIndex + 1) % QUOTES.length;
-        setTimeout(type, 600);
+        typingTimer = setTimeout(type, 600);
         return;
       }
-      setTimeout(type, 26);
+      typingTimer = setTimeout(type, 26);
     }
   }
 
   type();
-}
 
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      isTypingPaused = true;
+      clearTimeout(typingTimer);
+    } else {
+      isTypingPaused = false;
+      type();
+    }
+  });
+        }
 // ============ SHEET ============
 
 function setupSheet() {
