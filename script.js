@@ -27,10 +27,11 @@ const STATUS = [
 ];
 
 const QUOTES = [
-  'Even silence feels warm when you exist.',
-  'Distance means nothing when someone means everything.',
-  'You are still in my thoughts.',
-  'Somewhere, you are my calm place.'
+  'No sugar needed when I have CHO.',
+  'Two souls, one heartbeat.',
+  'Miles apart, but always close at heart.',
+  'Just thinking about you... again.',
+  'CHO, you are as sweet as ever.'
 ];
 
 // ============ INIT ============
