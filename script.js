@@ -26,13 +26,15 @@ const STATUS = [
   { id: 'working', label: 'Working', file: 'working.json' }
 ];
 
+
 const QUOTES = [
-  'No sugar needed when I have CHO.',
-  'Two souls, one heartbeat.',
-  'Miles apart, but always close at heart.',
-  'Just thinking about you... again.',
-  'CHO, you are as sweet as ever.'
+  'ROSE are you thinking of me right now?',
+  'I wonder what ROSE is doing this very second',
+  'Even a message from ROSE could light up my day.',
+  'ROSE Im smiling just imagining your face.,
+  'If only ROSE knew how much Im missing you'
 ];
+
 
 // ============ INIT ============
 
