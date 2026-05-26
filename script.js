@@ -26,14 +26,14 @@ const STATUS = [
   { id: 'working', label: 'Working', file: 'working.json' }
 ];
 
-
 const QUOTES = [
-  "ROSE are you thinking of me right now?",
-  "I wonder what ROSE is doing this very second",
-  "Even a message from ROSE could light up my day.",
-  "ROSE I'm smiling just imagining your face.",
-  "If only ROSE knew how much I'm missing you"
+  `ROSE are you thinking of me right now?`,
+  `I wonder what ROSE is doing this very second`,
+  `Even a message from ROSE could light up my day.`,
+  `ROSE I'm smiling just imagining your face.`,
+  `If only ROSE knew how much I'm missing you`
 ];
+
 
 // ============ INIT ============
 
