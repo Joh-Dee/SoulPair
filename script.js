@@ -27,11 +27,11 @@ const STATUS = [
 ];
 
 const QUOTES = [
-  `ROSE are you thinking of me right now?`,
-  `I wonder what ROSE is doing this very second`,
-  `Even a message from ROSE could light up my day.`,
-  `ROSE I'm smiling just imagining your face.`,
-  `If only ROSE knew how much I'm missing you`
+  'No sugar needed when I have CHO.',
+  'Two souls, one heartbeat.',
+  'Miles apart, but always close at heart.',
+  'Just thinking about you... again.',
+  'CHO, you are as sweet as ever.'
 ];
 
 
